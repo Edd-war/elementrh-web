@@ -19,7 +19,7 @@ const BrowserRouter = createBrowserRouter(
                     element: <App />,
                 },
                 {
-                    path: "/empresas",
+                    path: "/compañías",
                     element: <AllCompanies />,
                 },
                 {

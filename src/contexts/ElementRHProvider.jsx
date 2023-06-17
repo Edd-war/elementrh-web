@@ -48,6 +48,7 @@ const ElementRHProvider = ({ children }) => {
         try {
             const { data } = await clienteAxios.get('/api/companies');
             setEmpresas(data.companies);
+            return data;
         } catch (error) {
             console.log(error);
             setErrores(error);
@@ -71,38 +72,49 @@ const ElementRHProvider = ({ children }) => {
         obtenerEmpleados();
     }, []);
 
-    const nuevaEmpresa= async() => {
+    const nuevaEmpresa= async(formData) => {
         try {
-            const { data } = await clienteAxios.post('/api/companies');
-            setEmpresas([...empresas, data.company]);
+            const { data } = await clienteAxios.post('/api/companies', formData,
+            {
+                headers: {
+                    'X-XSRF-TOKEN': xsrf_token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(data);
+            obtenerEmpresas();
+            setErrores(null);
+            return data;
+        } catch (error) {
+            setErrores(error.response.data.errors);
+            throw error;
+        }
+    }
+
+    const editarEmpresa = async(id, formData) => {
+        try {
+            const { data } = await clienteAxios.post(`/api/companies/${id}`, formData,
+            {
+                headers: {
+                    'X-XSRF-TOKEN': xsrf_token,
+                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                }
+            });
+            console.log(data);
+            obtenerEmpresas();
+            setErrores(null);
+            return data;
         } catch (error) {
             console.log(error);
             setErrores(error);
         }
     }
 
-    const editarEmpresa = async(id, nombre) => {
-        // console.log(id);
-        // console.log(formData);
-        // const sendData = {
-        //     name: formData
-        // }
-        // const formData = new FormData();
-        // formData.append('name', nombre);
-        // console.log(sendData);
-        // console.log(nombre);
+    const eliminarEmpresa = async(id) => {
         try {
-            const { data } = await clienteAxios.patch(`/api/companies/${id}`, { name: nombre },
-            {
-                headers: {
-                    'X-XSRF-TOKEN': xsrf_token,
-                    // 'content-type': 'application/json',
-                    // 'Content-Type': `multipart/form-data`,
-                    // 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-                }
-            });
-            console.log(data);
+            const { data } = await clienteAxios.delete(`/api/companies/${id}`);
             obtenerEmpresas();
+            setErrores(null);
             return data;
         } catch (error) {
             console.log(error);
@@ -181,8 +193,11 @@ const ElementRHProvider = ({ children }) => {
                 obtenerPuestos,
                 obtenerEmpresas,
                 obtenerEmpleados,
+
                 nuevaEmpresa,
                 editarEmpresa,
+                eliminarEmpresa,
+
                 nuevoEmpleado,
                 editarEmpleado,
                 eliminarEmpleado

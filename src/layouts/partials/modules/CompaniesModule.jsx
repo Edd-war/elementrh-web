@@ -11,12 +11,12 @@ import {
 
 export default function CompaniesModule() {
     return (
-        <Link to="/empresas" className="text-blue-gray-500">
+        <Link to="/compañías" className="text-blue-gray-500">
             <ListItem className="text-black dark:text-white">
                 <ListItemPrefix>
                     <FaIndustry className="h-5 w-5" />
                 </ListItemPrefix>
-                Compañía
+                Compañías
             </ListItem>
         </Link>
     )
