@@ -38,6 +38,7 @@ const ElementRHProvider = ({ children }) => {
         try {
             const { data } = await clienteAxios.get('/api/positions');
             setPuestos(data.positions);
+            return data;
         } catch (error) {
             console.log(error);
             setErrores(error);
@@ -71,6 +72,57 @@ const ElementRHProvider = ({ children }) => {
         obtenerEmpresas();
         obtenerEmpleados();
     }, []);
+
+    const nuevoPuesto = async(formData) => {
+        try {
+            const { data } = await clienteAxios.post('/api/positions', formData,
+            {
+                headers: {
+                    'X-XSRF-TOKEN': xsrf_token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(data);
+            obtenerPuestos();
+            setErrores(null);
+            return data;
+        } catch (error) {
+            setErrores(error.response.data.errors);
+            throw error;
+        }
+    }
+
+    const editarPuesto = async(id, formData) => {
+        try {
+            const { data } = await clienteAxios.post(`/api/positions/${id}`, formData,
+            {
+                headers: {
+                    'X-XSRF-TOKEN': xsrf_token,
+                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                }
+            });
+            console.log(data);
+            obtenerPuestos();
+            setErrores(null);
+            return data;
+        } catch (error) {
+            console.log(error);
+            setErrores(error);
+        }
+    }
+
+    const eliminarPuesto = async(id) => {
+        try {
+            const { data } = await clienteAxios.delete(`/api/positions/${id}`);
+            obtenerPuestos();
+            setErrores(null);
+            return data;
+        }
+        catch (error) {
+            console.log(error);
+            setErrores(error);
+        }
+    }
 
     const nuevaEmpresa= async(formData) => {
         try {
@@ -183,13 +235,19 @@ const ElementRHProvider = ({ children }) => {
                 //values
                 theme, 
                 setTheme,
+
                 puestos,
                 empresas,
                 empleados,
+
                 errores,
                 setErrores,
 
                 //functions
+                nuevoPuesto,
+                editarPuesto,
+                eliminarPuesto,
+
                 obtenerPuestos,
                 obtenerEmpresas,
                 obtenerEmpleados,

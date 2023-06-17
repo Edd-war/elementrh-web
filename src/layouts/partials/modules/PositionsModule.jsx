@@ -11,7 +11,7 @@ import {
 
 export default function CompaniesModule() {
     return (
-        <Link to="/empresas" className="text-blue-gray-500">
+        <Link to="/posiciones" className="text-blue-gray-500">
             <ListItem className="text-black dark:text-white">
                 <ListItemPrefix>
                     <FaUsersCog className="h-5 w-5" />

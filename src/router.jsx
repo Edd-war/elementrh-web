@@ -6,6 +6,7 @@ import Layout from "./layouts/Layout.jsx"
 import AllEmployees from "./views/employee/AllEmployees.jsx"
 import EmployeeForm from "./views/employee/EmployeeForm.jsx";
 import AllCompanies from "./views/company/AllCompanies.jsx";
+import AllPositions from "./views/position/AllPositions.jsx";
 
 const BrowserRouter = createBrowserRouter(
     [
@@ -17,6 +18,10 @@ const BrowserRouter = createBrowserRouter(
                 {
                     path: "/welcome",
                     element: <App />,
+                },
+                {
+                    path: "/posiciones",
+                    element: <AllPositions />,
                 },
                 {
                     path: "/compañías",
@@ -31,7 +36,7 @@ const BrowserRouter = createBrowserRouter(
                     element: <EmployeeForm />,
                 },
                 {
-                    path: "/empleados/:id",
+                    path: "/empleados/edición/:id",
                     element: <EmployeeForm />,
                 }
             ],

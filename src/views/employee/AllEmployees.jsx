@@ -45,7 +45,7 @@ const AllEmployees = () => {
     const actionsButtons = (rowProps) => {
         return (
             <div className='flex justify-around'>
-                <Link to={`/empleados/${rowProps.row.id}`}>
+                <Link to={`/empleados/edición/${rowProps.row.id}`}>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
                         Editar
                     </button>

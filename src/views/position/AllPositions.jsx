@@ -5,12 +5,12 @@ import useElementRH from "../../hooks/useElemenRH";
 import { DataGrid } from '@mui/x-data-grid';
 
 
-const AllCompanies = () => {
-    const { empresas, nuevaEmpresa, editarEmpresa, eliminarEmpresa } = useElementRH();
+const AllPositions = () => {
+    const { puestos, nuevoPuesto, editarPuesto, eliminarPuesto } = useElementRH();
 
-    const handleNewCompanies = () => {
+    const handleNewPositions = () => {
         MUISwal.fire({
-            title: 'Nueva Compañía',
+            title: 'Nuevo puesto',
             input: 'text',
             showCancelButton: true,
             confirmButtonText: 'Crear',
@@ -30,16 +30,16 @@ const AllCompanies = () => {
 
                 formData.append('_method', 'POST');
 
-                nuevaEmpresa(formData).then(({message, company}) => {
-                    if(company)
+                nuevoPuesto(formData).then(({message, position}) => {
+                    if(position)
                     {
-                        console.log(company);
+                        console.log(position);
                     }
 
                     if (message) {
                         MUISwal.fire({
                             icon: 'success',
-                            title: 'Compañía creada corectamente',
+                            title: 'Posición creada corectamente',
                             text: message,
                             showConfirmButton: false,
                             timer: 1500
@@ -62,11 +62,11 @@ const AllCompanies = () => {
         });
     }
 
-    const handleEditCompanies = (company) => {
+    const handleEditPositions = (position) => {
         MUISwal.fire({
-            title: 'Editar Compañía',
+            title: 'Editar Posición',
             input: 'text',
-            inputValue: company.name,
+            inputValue: position.name,
             showCancelButton: true,
             confirmButtonText: 'Actualizar',
             showLoaderOnConfirm: true,
@@ -86,16 +86,16 @@ const AllCompanies = () => {
 
                 formData.append('_method', 'PUT');
 
-                editarEmpresa(company.id, formData).then(({message, company}) => {
-                    if(company)
+                editarPuesto(position.id, formData).then(({message, position}) => {
+                    if(position)
                     {
-                        console.log(company);
+                        console.log(position);
                     }
 
                     if (message) {
                         MUISwal.fire({
                             icon: 'success',
-                            title: 'Compañía Actualizada corectamente',
+                            title: 'Posición Actualizada corectamente',
                             text: message,
                             showConfirmButton: false,
                             timer: 1500
@@ -118,7 +118,7 @@ const AllCompanies = () => {
         });
     }
 
-    const handleDeleteCompanies = (company) => {
+    const handleDeletePositions = (position) => {
         MUISwal.fire({
             title: '¿Estas seguro?',
             text: "¡No podrás revertir esto!",
@@ -128,7 +128,7 @@ const AllCompanies = () => {
             cancelButtonText: 'No, cancelar',
             showLoaderOnConfirm: true,
             preConfirm: () => {
-                return eliminarEmpresa(company.id);
+                return eliminarPuesto(position.id);
             },
             allowOutsideClick: () => !MUISwal.isLoading()
         }).then((result) => {
@@ -136,7 +136,7 @@ const AllCompanies = () => {
                 if (result.value.message) {
                     MUISwal.fire({
                         icon: 'success',
-                        title: 'Compañía eliminada corectamente',
+                        title: 'Posición eliminada corectamente',
                         text: result.value.message,
                         showConfirmButton: false,
                         timer: 1500
@@ -163,13 +163,13 @@ const AllCompanies = () => {
         return (
             <div className='flex justify-around'>
                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={() => handleEditCompanies(rowProps.row)}
+                    onClick={() => handleEditPositions(rowProps.row)}
                 >
                     Editar
                 </button>
                 &nbsp;&nbsp;&nbsp;
                 <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={() => handleDeleteCompanies(rowProps.row)}
+                    onClick={() => handleDeletePositions(rowProps.row)}
                 >
                     Eliminar
                 </button>
@@ -188,19 +188,19 @@ const AllCompanies = () => {
         <>
             <div className='text-center mb-5'>
                 <h1 className="font-sans font-bold text-3xl text-gray-700 dark:text-gray-50">
-                    Todas las Compañías
+                    Todas las posiciones
                 </h1>
             </div>
             <div className='flex justify-end mb-5'>
                 <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={() => handleNewCompanies()}
+                    onClick={() => handleNewPositions()}
                 >
-                    Nueva Compañía
+                    Nueva Posición
                 </button>
             </div>
             <div style={{ height: 'auto', width: '100%' }}>
                 <DataGrid
-                    rows={empresas?.length > 0 ? empresas : []}
+                    rows={puestos?.length > 0 ? puestos : []}
                     columns={columns}
                     initialState={{
                         pagination: {
@@ -215,4 +215,4 @@ const AllCompanies = () => {
     )
 }
 
-export default AllCompanies
+export default AllPositions
