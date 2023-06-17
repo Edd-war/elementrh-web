@@ -7,6 +7,8 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { ElementRHProvider } from './contexts/ElementRHProvider.jsx';
 
 import './../resources/css/app.css'
+import './../resources/js/app.js'
+import './../resources/scss/app.scss'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
