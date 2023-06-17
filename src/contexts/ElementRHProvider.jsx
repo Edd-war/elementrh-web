@@ -152,6 +152,18 @@ const ElementRHProvider = ({ children }) => {
         }
     }
 
+    const eliminarEmpleado = async(id) => {
+        try {
+            const { data } = await clienteAxios.delete(`/api/employees/${id}`);
+            obtenerEmpleados();
+            setErrores(null);
+            return data;
+        } catch (error) {
+            console.log(error);
+            setErrores(error);
+        }
+    }
+
 
     return (
         <ElementRHContext.Provider 
@@ -172,7 +184,8 @@ const ElementRHProvider = ({ children }) => {
                 nuevaEmpresa,
                 editarEmpresa,
                 nuevoEmpleado,
-                editarEmpleado
+                editarEmpleado,
+                eliminarEmpleado
             }}
         >
             {children}

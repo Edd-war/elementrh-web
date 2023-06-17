@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Link } from "react-router-dom";
 import useElementRH from "../../hooks/useElemenRH";
 
@@ -5,7 +6,41 @@ import { DataGrid } from '@mui/x-data-grid';
 
 
 const AllEmployees = () => {
-    const { empleados } = useElementRH();
+    const { empleados, eliminarEmpleado } = useElementRH();
+
+    const handleEliminarEmpleado = async(id) => {
+        
+        MUISwal.fire({
+            title: '¿Estás seguro?',
+            text: "Un empleado eliminado no puede ser recuperado",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) 
+            {
+                eliminarEmpleado(id).then(({message}) => {
+                    console.log(message);
+                    MUISwal.fire(
+                        'Eliminado',
+                        message,
+                        'success'
+                    )
+                }).catch((error) => {
+                    console.log(error);
+                    MUISwal.fire(
+                        'Error',
+                        'Hubo un error al eliminar el empleado',
+                        'error'
+                    )
+                })
+            }
+        })
+    }
 
     const actionsButtons = (rowProps) => {
         return (
@@ -17,7 +52,7 @@ const AllEmployees = () => {
                 </Link>
                 &nbsp;&nbsp;&nbsp;
                 <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                    // as={Link} to={`/empleados/${rowProps.row.id}`}
+                    onClick={() => handleEliminarEmpleado(rowProps.row.id)}
                 >
                     Eliminar
                 </button>
