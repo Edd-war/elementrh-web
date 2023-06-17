@@ -4,7 +4,8 @@ import App from "./App.jsx";
 
 import Layout from "./layouts/Layout.jsx"
 import AllEmployees from "./views/employee/AllEmployees.jsx"
-import NewEmployee from "./views/employee/NewEmployee.jsx";
+import EmployeeForm from "./views/employee/EmployeeForm.jsx";
+import AllCompanies from "./views/company/AllCompanies.jsx";
 
 const BrowserRouter = createBrowserRouter(
     [
@@ -18,13 +19,21 @@ const BrowserRouter = createBrowserRouter(
                     element: <App />,
                 },
                 {
+                    path: "/empresas",
+                    element: <AllCompanies />,
+                },
+                {
                     path: "/empleados",
                     element: <AllEmployees />,
                 },
                 {
                     path: "/empleados/nuevo",
-                    element: <NewEmployee />,
+                    element: <EmployeeForm />,
                 },
+                {
+                    path: "/empleados/:id",
+                    element: <EmployeeForm />,
+                }
             ],
         }
     ]
